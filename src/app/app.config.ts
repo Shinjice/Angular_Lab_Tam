@@ -21,10 +21,11 @@ export const appConfig: ApplicationConfig = {
 };
 
 const firebaseConfig = {
-  apiKey: 'YOUR_API_KEY',
-  authDomain: 'YOUR_PROJECT.firebaseapp.com',
-  projectId: 'YOUR_PROJECT_ID',
-  storageBucket: 'YOUR_STORAGE_BUCKET',
-  messagingSenderId: 'YOUR_MESSAGING_SENDER_ID',
-  appId: 'YOUR_APP_ID',
+  apiKey: 'AIzaSyA6iwkDbiI4B5lGlBVRgVx6FWlobrGLbmM',
+  authDomain: 'angular-lab-tam.firebaseapp.com',
+  projectId: 'angular-lab-tam',
+  storageBucket: 'angular-lab-tam.firebasestorage.app',
+  messagingSenderId: '1024458928432',
+  appId: '1:1024458928432:web:e3fcd486c805a2cec258f5',
+  measurementId: 'G-N41K86GGQR',
 };
