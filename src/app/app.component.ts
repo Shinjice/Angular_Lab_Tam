@@ -7,7 +7,7 @@ import { TopNavbarComponent } from './shared/top-navbar/top-navbar.component';
   selector: 'app-root',
   imports: [RouterOutlet, TopNavbarComponent, FooterComponent],
   templateUrl: './app.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.Default,
   styleUrl: './app.component.scss',
 })
 export class AppComponent {
