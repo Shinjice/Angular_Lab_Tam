@@ -125,7 +125,7 @@ export class AuthService {
       // Ensure user document exists in Firestore
       await this.ensureUserDocument(result.user);
 
-      this.router.navigate(['/home']);
+      await this.router.navigate(['/home']);
     } catch (error: any) {
       throw new Error(this.getErrorMessage(error.code));
     }
@@ -133,8 +133,13 @@ export class AuthService {
 
   // Sign out
   async logout(): Promise<void> {
-    await signOut(this.auth);
-    this.router.navigate(['/']);
+    try {
+      await signOut(this.auth);
+      await this.router.navigate(['/login']);
+    } catch (error: any) {
+      console.error('Logout failed:', error);
+      throw new Error(this.getErrorMessage(error.code));
+    }
   }
 
   // Send password reset email

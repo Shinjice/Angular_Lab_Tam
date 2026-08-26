@@ -1,47 +1,40 @@
 import { inject } from '@angular/core';
-import { Router, CanActivateFn } from '@angular/router';
-import { AuthService } from '../services/auth.service';
+import { CanActivateFn, Router } from '@angular/router';
+import { Auth, authState } from '@angular/fire/auth';
+import { map, take } from 'rxjs';
 
-// Protects routes that require authentication
-export const authGuard: CanActivateFn = async (route, state) => {
-  const authService = inject(AuthService);
+export const authGuard: CanActivateFn = (route, state) => {
+  const auth = inject(Auth);
   const router = inject(Router);
 
-  // Wait for auth to finish loading
-  let attempts = 0;
-  while (authService.loading() && attempts < 50) {
-    await new Promise((resolve) => setTimeout(resolve, 50));
-    attempts++;
-  }
+  return authState(auth).pipe(
+    take(1),
+    map((user) => {
+      if (user) {
+        return true;
+      }
 
-  if (authService.currentUser()) {
-    return true;
-  }
-
-  // Redirect to login with return URL
-  router.navigate(['/login'], {
-    queryParams: { returnUrl: state.url },
-  });
-  return false;
+      return router.createUrlTree(['/login'], {
+        queryParams: {
+          returnUrl: state.url,
+        },
+      });
+    }),
+  );
 };
 
-// Prevents authenticated users from accessing auth pages
-export const publicGuard: CanActivateFn = async (route, state) => {
-  const authService = inject(AuthService);
+export const publicGuard: CanActivateFn = () => {
+  const auth = inject(Auth);
   const router = inject(Router);
 
-  // Wait for auth to finish loading
-  let attempts = 0;
-  while (authService.loading() && attempts < 50) {
-    await new Promise((resolve) => setTimeout(resolve, 50));
-    attempts++;
-  }
+  return authState(auth).pipe(
+    take(1),
+    map((user) => {
+      if (!user) {
+        return true;
+      }
 
-  if (!authService.currentUser()) {
-    return true;
-  }
-
-  // Already logged in, redirect to home
-  router.navigate(['/home']);
-  return false;
+      return router.createUrlTree(['/home']);
+    }),
+  );
 };
