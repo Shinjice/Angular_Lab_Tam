@@ -27,14 +27,13 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Create production environment
+      - name: Create environment file
         run: |
           mkdir -p src/environments
 
-          cat > src/environments/environment.prod.ts << 'EOF'
+          cat > src/environments/environment.ts << EOF
           export const environment = {
             production: true,
-
             firebase: {
               apiKey: '${{ vars.FIREBASE_API_KEY }}',
               authDomain: '${{ vars.FIREBASE_AUTH_DOMAIN }}',
@@ -46,6 +45,15 @@ jobs:
             },
           };
           EOF
+
+          echo "Environment file created:"
+          cat src/environments/environment.ts
+
+      - name: Verify environment file
+        run: |
+          test -f src/environments/environment.ts
+          test -s src/environments/environment.ts
+          echo "environment.ts exists and is not empty"
 
       - name: Build Angular
         run: npm run build -- --configuration production --base-href /Angular_Lab_Tam/
