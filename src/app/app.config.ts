@@ -4,28 +4,21 @@ import {
   provideZonelessChangeDetection,
 } from '@angular/core';
 import { provideRouter } from '@angular/router';
-
-import { routes } from './app.routes';
-
+import { provideHttpClient } from '@angular/common/http';
 import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { provideAuth, getAuth } from '@angular/fire/auth';
+import { provideFirestore, getFirestore } from '@angular/fire/firestore';
+import { routes } from './app.routes';
+import { environment } from '../environments/environment';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideZonelessChangeDetection(),
     provideRouter(routes),
-    provideFirebaseApp(() => initializeApp(firebaseConfig)),
+    provideHttpClient(),
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
+    provideFirestore(() => getFirestore()),
   ],
-};
-
-const firebaseConfig = {
-  apiKey: 'AIzaSyA6iwkDbiI4B5lGlBVRgVx6FWlobrGLbmM',
-  authDomain: 'angular-lab-tam.firebaseapp.com',
-  projectId: 'angular-lab-tam',
-  storageBucket: 'angular-lab-tam.firebasestorage.app',
-  messagingSenderId: '1024458928432',
-  appId: '1:1024458928432:web:e3fcd486c805a2cec258f5',
-  measurementId: 'G-N41K86GGQR',
 };
