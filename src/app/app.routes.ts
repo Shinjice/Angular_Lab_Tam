@@ -6,6 +6,7 @@ import { Register } from './features/register/register';
 import { adminGuard } from './core/guards/admin.guard';
 import { authGuard, publicGuard } from './core/guards/auth.guard';
 import { AdminPanel } from './features/admin-panel/admin-panel';
+import { Profile } from './features/profile/profile';
 
 export const routes: Routes = [
   // Public routes (redirect to home if already logged in)
@@ -29,6 +30,13 @@ export const routes: Routes = [
   {
     path: 'home',
     component: Home,
+    canActivate: [authGuard],
+  },
+
+  // Protected routes (require authentication)
+  {
+    path: 'profile',
+    component: Profile,
     canActivate: [authGuard],
   },
 
