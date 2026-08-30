@@ -1,52 +1,75 @@
 import { Routes } from '@angular/router';
+
 import { Login } from './features/login/login';
 import { Home } from './features/home/home';
 import { ForgotPassword } from './features/forgot-password/forgot-password';
 import { Register } from './features/register/register';
-import { adminGuard } from './core/guards/admin.guard';
-import { authGuard, publicGuard } from './core/guards/auth.guard';
 import { AdminPanel } from './features/admin-panel/admin-panel';
 import { Profile } from './features/profile/profile';
 
+import { MainLayout } from './features/main-layout/main-layout';
+
+import { adminGuard } from './core/guards/admin.guard';
+import { authGuard, publicGuard } from './core/guards/auth.guard';
+
 export const routes: Routes = [
-  // Public routes (redirect to home if already logged in)
+  // =========================
+  // PUBLIC ROUTES
+  // =========================
+
   {
     path: 'login',
     component: Login,
     canActivate: [publicGuard],
   },
+
   {
     path: 'register',
     component: Register,
     canActivate: [publicGuard],
   },
+
   {
     path: 'forgot-password',
     component: ForgotPassword,
     canActivate: [publicGuard],
   },
 
-  // Protected routes (require authentication)
+  // =========================
+  // AUTHENTICATED ROUTES
+  // =========================
+
   {
-    path: 'home',
-    component: Home,
+    path: '',
+    component: MainLayout,
     canActivate: [authGuard],
+
+    children: [
+      {
+        path: 'home',
+        component: Home,
+      },
+
+      {
+        path: 'profile',
+        component: Profile,
+      },
+
+      {
+        path: 'admin',
+        component: AdminPanel,
+        canActivate: [adminGuard],
+      },
+    ],
   },
 
-  // Protected routes (require authentication)
+  // =========================
+  // DEFAULT
+  // =========================
+
   {
-    path: 'profile',
-    component: Profile,
-    canActivate: [authGuard],
+    path: '',
+    redirectTo: '/home',
+    pathMatch: 'full',
   },
-
-  // Admin routes (require admin role)
-  {
-    path: 'admin',
-    component: AdminPanel,
-    canActivate: [adminGuard],
-  },
-
-  // Default redirect
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
 ];

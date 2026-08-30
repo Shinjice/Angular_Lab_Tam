@@ -4,7 +4,7 @@ import { Topnavbar } from '../../shared/topnavbar/topnavbar';
 
 @Component({
   selector: 'app-home',
-  imports: [Footer, Topnavbar],
+  imports: [],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
