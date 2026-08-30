@@ -3,7 +3,7 @@
     <div class="w-10 rounded-full">
       <img
         alt="Tailwind CSS Navbar component"
-        src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+        [src]="authService.currentUser()?.photoURL ?? 'assets/images/placeholder.jpg'"
       />
     </div>
   </div>
@@ -12,13 +12,52 @@
     class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
   >
     <li>
-      <a class="justify-between"> Profile </a>
+      <button onclick="profile.showModal()">Profile</button>
     </li>
     <li>
-      <a>Settings</a>
+      <button onclick="settings.showModal()">Settings</button>
     </li>
     <li>
-      <a>Logout</a>
+      <button (click)="authService.logout()">Logout</button>
     </li>
   </ul>
 </div>
+
+<dialog id="settings" class="modal">
+  <div class="modal-box">
+    <h3 class="text-lg font-bold">Settings</h3>
+    <div class="py-4">
+      <details class="dropdown">
+        <summary class="btn m-1">Choose theme</summary>
+        <ul class="menu dropdown-content bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
+          <li><a (click)="setTheme('light')">Light</a></li>
+          <li><a (click)="setTheme('dark')">Dark</a></li>
+        </ul>
+      </details>
+    </div>
+    <div class="modal-action">
+      <form method="dialog">
+        <!-- if there is a button in form, it will close the modal -->
+        <button class="btn">Close</button>
+      </form>
+    </div>
+  </div>
+</dialog>
+
+<dialog id="profile" class="modal">
+  <div class="modal-box">
+    <h3 class="text-lg font-bold">Profile</h3>
+    <div class="py-4">
+      <label>Name: </label>
+      <p>{{ authService.currentUser()?.displayName }}</p>
+      <label>Email: </label>
+      <p>{{ authService.currentUser()?.email }}</p>
+    </div>
+    <div class="modal-action">
+      <form method="dialog">
+        <!-- if there is a button in form, it will close the modal -->
+        <button class="btn">Close</button>
+      </form>
+    </div>
+  </div>
+</dialog>
