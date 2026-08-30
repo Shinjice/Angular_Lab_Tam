@@ -1,10 +1,13 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../core/services/auth.service';
 import { ActivatedRoute } from '@angular/router';
+import { Logo } from './logo/logo';
+import { Navigation } from './navigation/navigation';
+import { ProfileMenu } from './profile-menu/profile-menu';
 
 @Component({
   selector: 'app-topnavbar',
-  imports: [],
+  imports: [Logo, Navigation, ProfileMenu],
   templateUrl: './topnavbar.html',
   styleUrl: './topnavbar.css',
 })
