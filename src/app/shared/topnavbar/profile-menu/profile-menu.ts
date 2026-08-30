@@ -4,7 +4,7 @@ import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-profile-menu',
-  imports: [RouterLink],
+  imports: [],
   templateUrl: './profile-menu.html',
   styleUrl: './profile-menu.css',
 })

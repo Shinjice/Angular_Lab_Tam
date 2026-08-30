@@ -28,7 +28,7 @@
     <h3 class="text-lg font-bold">Settings</h3>
     <div class="py-4">
       <details class="dropdown">
-        <summary class="btn m-1">Choose theme</summary>
+        <summary class="btn m-1">Theme</summary>
         <ul class="menu dropdown-content bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
           <li><a (click)="setTheme('light')">Light</a></li>
           <li><a (click)="setTheme('dark')">Dark</a></li>
@@ -48,9 +48,9 @@
   <div class="modal-box">
     <h3 class="text-lg font-bold">Profile</h3>
     <div class="py-4">
-      <label>Name: </label>
+      <label class="label">Name: </label>
       <p>{{ authService.currentUser()?.displayName }}</p>
-      <label>Email: </label>
+      <label class="label">Email: </label>
       <p>{{ authService.currentUser()?.email }}</p>
     </div>
     <div class="modal-action">
